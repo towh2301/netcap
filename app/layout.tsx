@@ -16,8 +16,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "Movie App",
-	description: "Watch Movie online",
+	title: {
+		default: "NetCap – Movie Streaming Platform",
+		template: "%s | NetCap",
+	},
+	description:
+		"Stream your favorite movies and shows with NetCap, a Netflix-inspired clone built with Next.js.",
+	openGraph: {
+		title: "NetCap – Movie Streaming Platform",
+		description:
+			"Stream your favorite movies and shows with NetCap, a Netflix-inspired clone built with Next.js.",
+		url: "https://yourdomain.com",
+		siteName: "NetCap",
+		images: [
+			{
+				url: "https://yourdomain.com/og-default.png",
+				width: 1200,
+				height: 630,
+				alt: "NetCap Movie Streaming",
+			},
+		],
+		locale: "en_US",
+		type: "website",
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "NetCap – Movie Streaming Platform",
+		description:
+			"Your favorite movies and shows, streaming with Next.js power.",
+		images: ["https://yourdomain.com/og-default.png"],
+	},
 };
 
 export default async function RootLayout({

@@ -1,0 +1,16 @@
+{
+	"home": {
+		"title": "Chào mừng đến với Ứng dụng Xem Phim",
+		"description": "Xem phim trực tuyến"
+	},
+	"navbar": {
+		"home": "Trang chủ",
+		"movies": "Phim",
+		"series": "Phim bộ"
+	},
+	"not-found": {
+		"title": "Bạn bị lạc à?",
+		"description": "Xin lỗi, chúng tôi không tìm thấy trang bạn yêu cầu, hãy bắt đầu và tìm kiếm trang bạn cần ở Trang chủ",
+		"code": "Mã lỗi"
+	}
+}

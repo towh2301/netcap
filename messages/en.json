@@ -1,0 +1,16 @@
+{
+	"home": {
+		"title": "Welcome to Movie App",
+		"description": "Watch movies online"
+	},
+	"navbar": {
+		"home": "Home",
+		"movies": "Movies",
+		"series": "Series"
+	},
+	"not-found": {
+		"title": "Lost your way?",
+		"description": "Sorry, we can't find that page. You'll find lots to explore on the home page.",
+		"code": "Error Code "
+	}
+}

@@ -1,5 +1,12 @@
 "use client";
 
+import { useGetGenres } from "@/queries/genre";
+import {
+	DropdownMenu,
+	DropdownMenuTrigger,
+	DropdownMenuContent,
+	DropdownMenuItem,
+} from "@radix-ui/react-dropdown-menu";
 import clsx from "clsx";
 import { Menu, Search, X } from "lucide-react";
 import Link from "next/link";
@@ -9,8 +16,12 @@ export const NavBar = (): JSX.Element => {
 	const [search, setSearch] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
 
+	const { genres, handleInvalidateGenres, queryResult } = useGetGenres();
+
+	console.log(genres);
+
 	const handleSearch = (e: React.FormEvent) => {
-		e.preventDefault;
+		e.preventDefault();
 		if (search.trim()) {
 			console.log("Searching: ", search);
 		}
@@ -28,6 +39,29 @@ export const NavBar = (): JSX.Element => {
 				<div className="hidden md:flex space-x-6 text-white">
 					<Link href="/">Home</Link>
 					<Link href="/movies">Movies</Link>
+
+					{/* Genre Dropdown */}
+					<DropdownMenu>
+						<DropdownMenuTrigger className="cursor-pointer">
+							Genres
+						</DropdownMenuTrigger>
+						{/* <DropdownMenuContent className="bg-black text-white rounded-md shadow-lg p-2">
+							{genres.length > 0 ? (
+								genres?.map((genre) => (
+									<DropdownMenuItem key={genre._id} asChild>
+										<Link href={`/genre/${genre.slug}`}>
+											{genre.name}
+										</Link>
+									</DropdownMenuItem>
+								))
+							) : (
+								<p className="px-2 py-1 text-gray-400">
+									No genres
+								</p>
+							)}
+						</DropdownMenuContent> */}
+					</DropdownMenu>
+
 					<Link href="/series">Series</Link>
 					<Link href="/my-list">My List</Link>
 					<Link href="/about">About</Link>

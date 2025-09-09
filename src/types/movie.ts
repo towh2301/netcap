@@ -41,7 +41,7 @@ export interface MovieDetail extends MovieBasic {
 	episode_current: string;
 	quality: string;
 	lang: string;
-	category: Category[];
+	category: Genre[];
 	country: Country[];
 	created?: Created;
 }
@@ -53,7 +53,7 @@ export interface Created {
 // =========================
 // 🔹 Category / Country / Year
 // =========================
-export interface Category {
+export interface Genre {
 	_id: string;
 	name: string;
 	slug: string;

@@ -21,10 +21,10 @@ export const Hero = ({ movie }: { movie: MovieDetail }) => {
 				</p>
 				<div className="mt-6 flex gap-4">
 					<button className="rounded bg-white px-6 py-2 font-semibold text-black hover:bg-gray-200 transition">
-						▶ Play
+						Play
 					</button>
 					<button className="rounded bg-gray-700/80 px-6 py-2 font-semibold text-white hover:bg-gray-600 transition">
-						ℹ More Info
+						More Info
 					</button>
 				</div>
 			</div>

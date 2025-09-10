@@ -1,28 +1,21 @@
 "use client";
 
-import { useGetCountries, useGetGenres } from "@/queries/generic";
-import {
-	DropdownMenu,
-	DropdownMenuTrigger,
-	DropdownMenuContent,
-	DropdownMenuItem,
-} from "@radix-ui/react-dropdown-menu";
+import {useGetCountries, useGetGenres} from "@/queries/generic";
 import clsx from "clsx";
-import { Menu, Search, X } from "lucide-react";
+import {Menu, Search, X} from "lucide-react";
 import Link from "next/link";
-import React, { JSX, useEffect, useState } from "react";
-import GenreDropdown from "./GenericDropdown";
-import { ModeToggle } from "./ModeToggle";
+import React, {JSX, useState} from "react";
+import {ModeToggle} from "./ModeToggle";
 import GenericDropdown from "./GenericDropdown";
-import { Country, Genre } from "@/types";
-import { useRouter } from "next/navigation";
+import {Country, Genre} from "@/types";
+import {useRouter} from "next/navigation";
 
 export const NavBar = (): JSX.Element => {
 	const [search, setSearch] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
 
-	const { genres } = useGetGenres();
-	const { countries } = useGetCountries();
+	const {genres} = useGetGenres();
+	const {countries} = useGetCountries();
 	const router = useRouter();
 
 	const handleSearch = (e: React.FormEvent) => {
@@ -44,13 +37,13 @@ export const NavBar = (): JSX.Element => {
 				{/* Navigation Links */}
 				<div className="hidden md:flex space-x-6 text-white">
 					<Link href="/">Home</Link>
-
 					<Link href="/movies">Movies</Link>
 					<Link href="/series">Series</Link>
+					<Link href="/cartoon">Cartoons</Link>
 					<Link href="/my-list">My List</Link>
 					<GenericDropdown<Genre>
 						items={genres}
-						label="Genres"
+						label="Categories"
 						getKey={(item) => item._id}
 						getHref={(item) => `/genre/${item.slug}`}
 						getLabel={(item) => item.name}
@@ -67,7 +60,7 @@ export const NavBar = (): JSX.Element => {
 
 				{/* Search */}
 				<div className="flex gap-4">
-					<ModeToggle />
+					<ModeToggle/>
 					<form
 						onSubmit={handleSearch}
 						className="hidden md:flex items-center bg-gray-800 rounded-lg px-3 py-1"
@@ -75,24 +68,30 @@ export const NavBar = (): JSX.Element => {
 						<input
 							type="text"
 							placeholder="Search..."
+							aria-label="Search movies"
 							value={search}
 							onChange={(e) => setSearch(e.target.value)}
-							className="bg-transparent outline-none text-white px-2"
+							className="bg-transparent text-white px-2 outline-none rounded"
 						/>
 						<button
 							type="submit"
-							className="text-gray-400 hover:text-white"
+							aria-label="Submit search"
+							className="text-gray-400 hover:text-white outline-none rounded"
 						>
 							<Search size={18} />
 						</button>
 					</form>
 
+
 					{/* Mobile Hamburger */}
 					<button
-						className="md:hidden text-white"
+						className="md:hidden text-white focus-visible:ring-2 focus-visible:ring-red-500 rounded"
 						onClick={() => setIsOpen(!isOpen)}
+						aria-label={isOpen ? "Close menu" : "Open menu"}
+						aria-controls="mobile-menu"
+						aria-expanded={isOpen}
 					>
-						{isOpen ? <X size={28} /> : <Menu size={28} />}
+						{isOpen ? <X size={28}/> : <Menu size={28}/>}
 					</button>
 				</div>
 			</div>
@@ -116,12 +115,13 @@ export const NavBar = (): JSX.Element => {
 					<Link href="/series" onClick={() => setIsOpen(false)}>
 						Series
 					</Link>
+					<Link href="/cartoon" onClick={() => setIsOpen(false)}>Cartoons</Link>
 					<Link href="/my-list" onClick={() => setIsOpen(false)}>
 						My List
 					</Link>
 					<GenericDropdown<Genre>
 						items={genres}
-						label="Genres "
+						label="Categories"
 						getKey={(item) => item._id}
 						getHref={(item) => `/genre/${item.slug}`}
 						getLabel={(item) => item.name}
@@ -135,7 +135,7 @@ export const NavBar = (): JSX.Element => {
 					/>
 
 					{/* Mobile Search */}
-					<ModeToggle />
+					<ModeToggle/>
 					<form
 						onSubmit={handleSearch}
 						className="flex items-center bg-gray-800 rounded-lg px-3 py-1"
@@ -143,15 +143,17 @@ export const NavBar = (): JSX.Element => {
 						<input
 							type="text"
 							placeholder="Search..."
+							aria-label="Search movies"
 							value={search}
 							onChange={(e) => setSearch(e.target.value)}
-							className="bg-transparent outline-none text-white px-2 w-full"
+							className="bg-transparent outline-none text-white px-2 w-full rounded"
 						/>
 						<button
 							type="submit"
-							className="text-gray-400 hover:text-white"
+							aria-label="Submit search"
+							className="text-gray-400 hover:text-white focus-visible:ring-2 focus-visible:ring-red-500 rounded"
 						>
-							<Search size={18} />
+							<Search size={18}/>
 						</button>
 					</form>
 				</div>

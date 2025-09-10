@@ -1,7 +1,6 @@
 "use client";
 
 import { Hero, LoadingMovies, MovieRow } from "@/components";
-import LoadingIndicator from "@/components/ui/loading-indicator";
 import {
 	useGetNewMovies,
 	useGetNewMoviesV2,

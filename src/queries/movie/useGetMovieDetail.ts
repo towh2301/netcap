@@ -4,38 +4,38 @@ import { movieApis } from ".";
 import { API_MOVIE_QUERIES } from "./keys";
 
 export type ServerDataItem = {
-  name: string;
-  slug?: string;
-  filename?: string;
-  link_embed?: string;
-  link_m3u8?: string;
+	name: string;
+	slug?: string;
+	filename?: string;
+	link_embed?: string;
+	link_m3u8?: string;
 };
 
 export type EpisodeServer = {
-  server_name: string;
-  server_data: ServerDataItem[];
+	server_name: string;
+	server_data: ServerDataItem[];
 };
 
 export type MovieDetailPayload = {
-  status: boolean;
-  msg?: string;
-  movie?: any; // Keep flexible due to varying API shape
-  episodes?: EpisodeServer[];
+	status: boolean;
+	msg?: string;
+	movie?: any; // flexible due to varying API shape
+	episodes?: EpisodeServer[];
 };
 
 export const useGetMovieDetail = (
-  slug: string,
-  options?: UseQueryOptions<MovieDetailPayload, Error>
+	slug: string,
+	options?: UseQueryOptions<MovieDetailPayload, Error>
 ) => {
-  return useQuery<MovieDetailPayload, Error>({
-    queryKey: [API_MOVIE_QUERIES.MOVIES_BY_YEAR, { slug }], // reuse enum to avoid adding new one
-    queryFn: async ({ queryKey }) => {
-      const [_key, params] = queryKey as [string, { slug: string }];
-      const res: AxiosResponse<MovieDetailPayload> = await movieApis.getMovieDetail(params.slug);
-      return res.data;
-    },
-    enabled: Boolean(slug),
-    staleTime: 1000 * 60 * 5,
-    ...options,
-  });
+	return useQuery<MovieDetailPayload, Error>({
+		queryKey: [API_MOVIE_QUERIES.MOVIES_BY_YEAR, { slug }],
+		queryFn: async () => {
+			const res: AxiosResponse<MovieDetailPayload> =
+				await movieApis.getMovieDetail(slug);
+			return res.data;
+		},
+		enabled: Boolean(slug),
+		staleTime: 1000 * 60 * 5,
+		...options,
+	});
 };

@@ -5,10 +5,10 @@ import {Button} from "@/components/ui/button";
 import {MOVIE_TYPES, useGetMovieList} from "@/queries";
 import {useState} from "react";
 
-export default function MoviesPage() {
+export default function CartoonPage() {
 	const [page, setPage] = useState(1);
 
-	const { movies, pagination, isLoading, isError } = useGetMovieList({ type: MOVIE_TYPES.MOVIE, pageNumber: page});
+	const { movies, pagination, isLoading, isError } = useGetMovieList({ type: MOVIE_TYPES.CARTOON, pageNumber: page});
 
 	const canPrev = page > 1;
 	const canNext = page < (pagination?.totalPages ?? page);
@@ -18,7 +18,7 @@ export default function MoviesPage() {
 	return (
 		<main className="bg-black min-h-screen text-white pt-20 px-6 md:px-10 lg:px-16 pb-10">
 			<header className="flex items-end justify-between mb-6">
-				<h1 className="text-3xl md:text-4xl font-bold">Movies</h1>
+				<h1 className="text-3xl md:text-4xl font-bold">Cartoons</h1>
 				<div className="text-sm text-gray-400">
 					Page {pagination?.currentPage ?? page} / {pagination?.totalPages ?? 1}
 				</div>

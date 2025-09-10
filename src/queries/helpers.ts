@@ -3,22 +3,27 @@ export async function responseWrapper<T>(
 	func: ApiCall,
 	[...args]: any[] = []
 ): Promise<T> {
-	// eslint-disable-next-line no-async-promise-executor
-	return new Promise(async (res, rej) => {
-		try {
-			const response = (await func(...args)) || {};
-			if (response.status >= 200 && response.status < 300)
-				res(response.data);
-			if (response?.originalError?.message === "CONNECTION_TIMEOUT") {
-				alert(
-					"Connection timeout. Please check your network and try again."
-				);
-			}
-			rej(response.data);
-		} catch (err) {
-			rej(err);
+	try {
+		const response = (await func(...args)) || {};
+
+		// Success path
+		if (response.status >= 200 && response.status < 300) {
+			return response.data as T;
 		}
-	});
+
+		// Connection timeout hint
+		if (response?.originalError?.message === "CONNECTION_TIMEOUT") {
+			if (typeof window !== "undefined" && typeof window.alert === "function") {
+				window.alert("Connection timeout. Please check your network and try again.");
+			}
+		}
+
+		// Non-2xx – throw response payload if available
+		throw response?.data ?? response;
+	} catch (err) {
+		// Bubble up error
+		throw err as any;
+	}
 }
 
 export interface ApiResponseType<T> {
@@ -71,6 +76,3 @@ export interface Pagination {
 export type GetPropertiesParams = {
 	[key: string]: string | number | string[] | boolean;
 };
-function alert(arg0: string) {
-	throw new Error("Function not implemented.");
-}

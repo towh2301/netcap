@@ -1,13 +1,13 @@
 "use client";
 
-import { LoadingMovies, MovieCard } from "@/components";
-import { Button } from "@/components/ui/button";
-import { useGetNewMovies } from "@/queries";
-import { useState } from "react";
+import {LoadingMovies, MovieCard} from "@/components";
+import {Button} from "@/components/ui/button";
+import {MOVIE_TYPES, useGetMovieList} from "@/queries";
+import {useState} from "react";
 
 export default function SeriesPage() {
 	const [page, setPage] = useState(1);
-	const { movies, pagination, isLoading, isError } = useGetNewMovies({ pageNumber: page });
+	const { movies, pagination, isLoading, isError } = useGetMovieList({ type: MOVIE_TYPES.SERIES, pageNumber: page });
 
 	const canPrev = page > 1;
 	const canNext = page < (pagination?.totalPages ?? page);

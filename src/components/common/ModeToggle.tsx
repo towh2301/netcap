@@ -8,7 +8,7 @@ import {
 	DropdownMenuTrigger,
 	DropdownMenuContent,
 	DropdownMenuItem,
-} from "@radix-ui/react-dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
 
 export const ModeToggle = () => {

@@ -13,6 +13,12 @@ export const API_URLS = {
 	NEW_MOVIES: (page: number = 1) =>
 		`${BASE_URL}/danh-sach/phim-moi-cap-nhat?page=${page}`,
 
+	NEW_MOVIES_V2: (page: number = 1) =>
+		`${BASE_URL}/danh-sach/phim-moi-cap-nhat?page=${page}`,
+
+	NEW_MOVIES_V3: (page: number = 1) =>
+		`${BASE_URL}/danh-sach/phim-moi-cap-nhat?page=${page}`,
+
 	// Movie detail + episodes
 	MOVIE_DETAIL: (slug: string) => `${BASE_URL}/phim/${slug}`,
 

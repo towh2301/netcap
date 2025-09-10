@@ -1,3 +1,0 @@
-export enum API_GENRE_QUERIES {
-	GET_GENRES = "GET_GENRES",
-}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetGenres } from "@/queries/genre";
+import { useGetCountries, useGetGenres } from "@/queries/generic";
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -10,20 +10,26 @@ import {
 import clsx from "clsx";
 import { Menu, Search, X } from "lucide-react";
 import Link from "next/link";
-import React, { JSX, useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
+import GenreDropdown from "./GenericDropdown";
+import { ModeToggle } from "./ModeToggle";
+import GenericDropdown from "./GenericDropdown";
+import { Country, Genre } from "@/types";
+import { useRouter } from "next/navigation";
 
 export const NavBar = (): JSX.Element => {
 	const [search, setSearch] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
 
-	const { genres, handleInvalidateGenres, queryResult } = useGetGenres();
-
-	console.log(genres);
+	const { genres } = useGetGenres();
+	const { countries } = useGetCountries();
+	const router = useRouter();
 
 	const handleSearch = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (search.trim()) {
-			console.log("Searching: ", search);
+		const q = search.trim();
+		if (q) {
+			router.push(`/search?query=${encodeURIComponent(q)}`);
 		}
 	};
 
@@ -38,62 +44,57 @@ export const NavBar = (): JSX.Element => {
 				{/* Navigation Links */}
 				<div className="hidden md:flex space-x-6 text-white">
 					<Link href="/">Home</Link>
+
 					<Link href="/movies">Movies</Link>
-
-					{/* Genre Dropdown */}
-					<DropdownMenu>
-						<DropdownMenuTrigger className="cursor-pointer">
-							Genres
-						</DropdownMenuTrigger>
-						{/* <DropdownMenuContent className="bg-black text-white rounded-md shadow-lg p-2">
-							{genres.length > 0 ? (
-								genres?.map((genre) => (
-									<DropdownMenuItem key={genre._id} asChild>
-										<Link href={`/genre/${genre.slug}`}>
-											{genre.name}
-										</Link>
-									</DropdownMenuItem>
-								))
-							) : (
-								<p className="px-2 py-1 text-gray-400">
-									No genres
-								</p>
-							)}
-						</DropdownMenuContent> */}
-					</DropdownMenu>
-
 					<Link href="/series">Series</Link>
 					<Link href="/my-list">My List</Link>
+					<GenericDropdown<Genre>
+						items={genres}
+						label="Genres"
+						getKey={(item) => item._id}
+						getHref={(item) => `/genre/${item.slug}`}
+						getLabel={(item) => item.name}
+					/>
+					<GenericDropdown<Country>
+						items={countries}
+						label="Countries"
+						getKey={(item) => item._id}
+						getHref={(item) => `/country/${item.slug}`}
+						getLabel={(item) => item.name}
+					/>
 					<Link href="/about">About</Link>
 				</div>
 
 				{/* Search */}
-				<form
-					onSubmit={handleSearch}
-					className="hidden md:flex items-center bg-gray-800 rounded-lg px-3 py-1"
-				>
-					<input
-						type="text"
-						placeholder="Search..."
-						value={search}
-						onChange={(e) => setSearch(e.target.value)}
-						className="bg-transparent outline-none text-white px-2"
-					/>
-					<button
-						type="submit"
-						className="text-gray-400 hover:text-white"
+				<div className="flex gap-4">
+					<ModeToggle />
+					<form
+						onSubmit={handleSearch}
+						className="hidden md:flex items-center bg-gray-800 rounded-lg px-3 py-1"
 					>
-						<Search size={18} />
-					</button>
-				</form>
+						<input
+							type="text"
+							placeholder="Search..."
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
+							className="bg-transparent outline-none text-white px-2"
+						/>
+						<button
+							type="submit"
+							className="text-gray-400 hover:text-white"
+						>
+							<Search size={18} />
+						</button>
+					</form>
 
-				{/* Mobile Hamburger */}
-				<button
-					className="md:hidden text-white"
-					onClick={() => setIsOpen(!isOpen)}
-				>
-					{isOpen ? <X size={28} /> : <Menu size={28} />}
-				</button>
+					{/* Mobile Hamburger */}
+					<button
+						className="md:hidden text-white"
+						onClick={() => setIsOpen(!isOpen)}
+					>
+						{isOpen ? <X size={28} /> : <Menu size={28} />}
+					</button>
+				</div>
 			</div>
 
 			{/* Mobile Menu */}
@@ -118,8 +119,23 @@ export const NavBar = (): JSX.Element => {
 					<Link href="/my-list" onClick={() => setIsOpen(false)}>
 						My List
 					</Link>
+					<GenericDropdown<Genre>
+						items={genres}
+						label="Genres "
+						getKey={(item) => item._id}
+						getHref={(item) => `/genre/${item.slug}`}
+						getLabel={(item) => item.name}
+					/>
+					<GenericDropdown<Country>
+						items={countries}
+						label="Countries"
+						getKey={(item) => item._id}
+						getHref={(item) => `/country/${item.slug}`}
+						getLabel={(item) => item.name}
+					/>
 
 					{/* Mobile Search */}
+					<ModeToggle />
 					<form
 						onSubmit={handleSearch}
 						className="flex items-center bg-gray-800 rounded-lg px-3 py-1"

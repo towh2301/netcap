@@ -14,7 +14,7 @@ type CustomParams = {
 	pageNumber?: number;
 };
 
-export const useGetNewMovies = (
+export const useGetNewMoviesV2 = (
 	{ pageNumber = 1 }: CustomParams = {},
 	options?: UseQueryOptions<MovieApiResponse, Error>
 ) => {
@@ -25,7 +25,7 @@ export const useGetNewMovies = (
 		queryFn: async ({ queryKey }) => {
 			const [_key, params] = queryKey as [string, { page: number }];
 			const res: AxiosResponse<MovieApiResponse> =
-				await movieApis.getNewMovies(params.page);
+				await movieApis.getNewMoviesV2(params.page);
 
 			return res.data; // ✅ unwrap here
 		},
@@ -39,7 +39,7 @@ export const useGetNewMovies = (
 		});
 
 	// ✅ neatly extract data + pagination
-	const movies: MovieDetail[] = queryResult.data?.items ?? [];
+	const movies_v2: MovieDetail[] = queryResult.data?.items ?? [];
 	const pagination = queryResult.data?.pagination ?? {
 		totalItems: 0,
 		totalItemsPerPage: 0,
@@ -49,7 +49,7 @@ export const useGetNewMovies = (
 
 	return {
 		...queryResult,
-		movies,
+		movies_v2,
 		pagination,
 		handleInvalidateNewMovies,
 	};

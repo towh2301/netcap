@@ -1,9 +1,11 @@
 import { cn } from "@/lib/utils"; // Shadcn/UI utility for className merging
 import { MovieDetail } from "@/types";
+import Link from "next/link";
 
 export const MovieCard = ({ movie }: { movie: MovieDetail }) => {
 	return (
-		<div
+		<Link
+			href={`/watch/${movie?.slug}`}
 			className={cn(
 				"relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-netflix-dark shadow-md",
 				"group transition-all duration-300"
@@ -30,6 +32,6 @@ export const MovieCard = ({ movie }: { movie: MovieDetail }) => {
 					{movie?.year} - {movie?.tmdb?.vote_average}
 				</p>
 			</div>
-		</div>
+		</Link>
 	);
 };

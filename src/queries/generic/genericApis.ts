@@ -1,4 +1,4 @@
-import { BASE_URL } from "./../keys";
+import { BASE_URL } from "../keys";
 import { useHttpPublicRequest } from "@/services";
 import { API_URLS } from "../keys";
 
@@ -9,8 +9,13 @@ const useApis = (baseUrl = BASE_URL) => {
 		return publicApi.get(`${API_URLS.GENRES}`);
 	};
 
+	const getCountries = () => {
+		return publicApi.get(`${API_URLS.COUNTRIES}`);
+	};
+
 	return {
 		getGenres,
+		getCountries,
 	};
 };
 

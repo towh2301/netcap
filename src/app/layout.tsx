@@ -56,7 +56,7 @@ export default async function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
+				className={`${geistSans.variable} ${geistMono.variable} antialiased relative scrollbar-hide scroll-smooth`}
 			>
 				<ReactQueryProvider>
 					<NextIntlClientProvider>

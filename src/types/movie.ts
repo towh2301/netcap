@@ -67,6 +67,7 @@ export interface Country {
 
 // For API `/nam`
 export interface YearItem {
+	_id: string;
 	year: number;
 	slug: string;
 }

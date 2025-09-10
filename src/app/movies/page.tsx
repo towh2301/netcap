@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useGetNewMovies } from "@/queries";
 import { useState } from "react";
 
-export default function SeriesPage() {
+export default function MoviesPage() {
 	const [page, setPage] = useState(1);
 	const { movies, pagination, isLoading, isError } = useGetNewMovies({ pageNumber: page });
 
@@ -17,14 +17,14 @@ export default function SeriesPage() {
 	return (
 		<main className="bg-black min-h-screen text-white pt-20 px-6 md:px-10 lg:px-16 pb-10">
 			<header className="flex items-end justify-between mb-6">
-				<h1 className="text-3xl md:text-4xl font-bold">Series</h1>
+				<h1 className="text-3xl md:text-4xl font-bold">Movies</h1>
 				<div className="text-sm text-gray-400">
 					Page {pagination?.currentPage ?? page} / {pagination?.totalPages ?? 1}
 				</div>
 			</header>
 
 			{isError && (
-				<p className="text-red-400 mb-4">Failed to load series. Please try again.</p>
+				<p className="text-red-400 mb-4">Failed to load movies. Please try again.</p>
 			)}
 
 			<section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6">

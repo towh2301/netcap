@@ -8,6 +8,7 @@ import {
 	DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
+import {useState} from "react";
 
 type DropdownProps<T> = {
 	items?: T[];
@@ -15,6 +16,7 @@ type DropdownProps<T> = {
 	getKey: (item: T) => string | number;
 	getHref: (item: T) => string;
 	getLabel: (item: T) => string;
+	onClick?: (item: T) => void;
 };
 
 export default function GenericDropdown<T>({
@@ -23,7 +25,9 @@ export default function GenericDropdown<T>({
 	getKey,
 	getHref,
 	getLabel,
+	onClick
 }: DropdownProps<T>) {
+	const [isOpen, setIsOpen] = useState(false);
 	return (
 		<DropdownMenu>
 			{/* Trigger with arrow */}
@@ -49,11 +53,16 @@ export default function GenericDropdown<T>({
 							<Link
 								href={getHref(item)}
 								className="block w-full text-center px-2 py-1 hover:bg-gray-700 rounded-md"
+								onClick={() => {
+									onClick?.(item); // gọi callback nếu có
+									setIsOpen(false); // đóng dropdown
+								}}
 							>
 								{getLabel(item)}
 							</Link>
 						</DropdownMenuItem>
 					))
+
 				) : (
 					<div className="px-2 py-1 text-gray-400 col-span-6 text-center">
 						No items

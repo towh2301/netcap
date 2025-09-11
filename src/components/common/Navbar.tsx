@@ -125,6 +125,7 @@ export const NavBar = (): JSX.Element => {
 						getKey={(item) => item._id}
 						getHref={(item) => `/genre/${item.slug}`}
 						getLabel={(item) => item.name}
+						onClick={() => setIsOpen(false)}
 					/>
 					<GenericDropdown<Country>
 						items={countries}
@@ -132,6 +133,7 @@ export const NavBar = (): JSX.Element => {
 						getKey={(item) => item._id}
 						getHref={(item) => `/country/${item.slug}`}
 						getLabel={(item) => item.name}
+						onClick={() => setIsOpen(false)}
 					/>
 					<Link href="/about" onClick={() => setIsOpen(false)}>About</Link>
 

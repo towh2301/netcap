@@ -43,12 +43,15 @@ export default function WatchPage() {
 					<div className="grid md:grid-cols-3 gap-6">
 						<div className="md:col-span-2 aspect-video bg-netflix-dark rounded-lg overflow-hidden">
 							{playerSrc ? (
-								<iframe
-									title={data.movie?.name || data.movie?.origin_name || slug}
-									src={playerSrc}
-									className="w-full h-full"
-									allowFullScreen
-								/>
+								<div className="relative w-full overflow-hidden rounded-2xl shadow-lg bg-black aspect-video">
+									<iframe
+										title={data.movie?.name || data.movie?.origin_name || slug}
+										src={playerSrc}
+										className="w-full h-full rounded-2xl"
+										allowFullScreen
+									/>
+								</div>
+
 							) : (
 								<div className="w-full h-full flex items-center justify-center text-gray-400">
 									No playable source for this episode.

@@ -133,9 +133,9 @@ export const NavBar = (): JSX.Element => {
 						getHref={(item) => `/country/${item.slug}`}
 						getLabel={(item) => item.name}
 					/>
+					<Link href="/about" onClick={() => setIsOpen(false)}>About</Link>
 
 					{/* Mobile Search */}
-					<ModeToggle/>
 					<form
 						onSubmit={handleSearch}
 						className="flex items-center bg-gray-800 rounded-lg px-3 py-1"

@@ -7,3 +7,4 @@ export * from "./MovieRow";
 export * from "./Hero";
 export * from "./GenericDropdown";
 export * from "./MovieDetailsPanel";
+export * from "./AddToMyListButton"

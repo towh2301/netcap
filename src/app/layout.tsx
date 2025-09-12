@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../components/providers/theme-provider";
 import { NextIntlClientProvider } from "next-intl";
-import { NavBar, ReactQueryProvider } from "@/components";
+import { AuthProvider, NavBar, ReactQueryProvider } from "@/components";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -58,19 +58,21 @@ export default async function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased relative scrollbar-hide scroll-smooth`}
 			>
-				<ReactQueryProvider>
-					<NextIntlClientProvider>
-						<ThemeProvider
-							attribute="class"
-							defaultTheme="system"
-							enableSystem
-							disableTransitionOnChange
-						>
-							<NavBar />
-							{children}
-						</ThemeProvider>
-					</NextIntlClientProvider>
-				</ReactQueryProvider>
+				<AuthProvider>
+					<ReactQueryProvider>
+						<NextIntlClientProvider>
+							<ThemeProvider
+								attribute="class"
+								defaultTheme="system"
+								enableSystem
+								disableTransitionOnChange
+							>
+								<NavBar />
+								{children}
+							</ThemeProvider>
+						</NextIntlClientProvider>
+					</ReactQueryProvider>
+				</AuthProvider>
 			</body>
 		</html>
 	);

@@ -9,6 +9,9 @@ import {ModeToggle} from "./ModeToggle";
 import GenericDropdown from "./GenericDropdown";
 import {Country, Genre} from "@/types";
 import {useRouter} from "next/navigation";
+import {useAuthStore} from "@/stores";
+import Image from "next/image";
+import {loginWithGoogle, logout} from "@/services";
 
 export const NavBar = (): JSX.Element => {
 	const [search, setSearch] = useState("");
@@ -17,6 +20,7 @@ export const NavBar = (): JSX.Element => {
 	const {genres} = useGetGenres();
 	const {countries} = useGetCountries();
 	const router = useRouter();
+	const {user, loading} = useAuthStore();
 
 	const handleSearch = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -40,7 +44,7 @@ export const NavBar = (): JSX.Element => {
 					<Link href="/movies">Movies</Link>
 					<Link href="/series">Series</Link>
 					<Link href="/cartoon">Cartoons</Link>
-					<Link href="/my-list">My List</Link>
+
 					<GenericDropdown<Genre>
 						items={genres}
 						label="Categories"
@@ -55,12 +59,13 @@ export const NavBar = (): JSX.Element => {
 						getHref={(item) => `/country/${item.slug}`}
 						getLabel={(item) => item.name}
 					/>
+					{user ? <Link href="/my-list">My List</Link> : null}
 					<Link href="/about">About</Link>
 				</div>
 
 				{/* Search */}
 				<div className="flex gap-4">
-					<ModeToggle/>
+					{/*<ModeToggle/>*/}
 					<form
 						onSubmit={handleSearch}
 						className="hidden md:flex items-center bg-gray-800 rounded-lg px-3 py-1"
@@ -78,10 +83,49 @@ export const NavBar = (): JSX.Element => {
 							aria-label="Submit search"
 							className="text-gray-400 hover:text-white outline-none rounded"
 						>
-							<Search size={18} />
+							<Search size={18}/>
 						</button>
 					</form>
 
+					{/* Auth/User */}
+					<div className="hidden md:flex items-center gap-3 text-white">
+						{loading ? (
+							<span className="text-sm text-gray-300">Loading...</span>
+						) : user ? (
+							<div className="flex items-center gap-3">
+								<div className="relative group">
+									<Link href="/profile" className="flex items-center gap-2">
+										<div className="w-8 h-8 rounded-full overflow-hidden bg-gray-700">
+											{user.photoURL ? (
+												<Image src={user.photoURL} alt="avatar" width={32} height={32}/>
+											) : (
+												<div className="w-full h-full flex items-center justify-center text-xs">
+													{user.email?.[0]?.toUpperCase()}
+												</div>
+											)}
+										</div>
+										<span
+											className="text-sm hidden lg:inline max-w-[160px] truncate">{user.displayName || user.email}</span>
+									</Link>
+									{/* Hover dropdown */}
+									<div
+										className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity absolute right-0 mt-2 w-40 bg-gray-900 border border-gray-700 rounded-md shadow-lg py-1">
+										<Link href="/profile"
+										      className="block px-3 py-2 text-sm hover:bg-gray-800">Profile</Link>
+										<button onClick={() => logout()}
+										        className="w-full text-left block px-3 py-2 text-sm text-red-300 hover:text-red-400 hover:bg-gray-800">Sign
+											out
+										</button>
+									</div>
+								</div>
+							</div>
+						) : (
+							<button onClick={() => loginWithGoogle()}
+							        className="text-sm font-medium text-black bg-white px-4 py-1.5 rounded-full border border-gray-200 shadow hover:bg-gray-100 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+								Sign in
+							</button>
+						)}
+					</div>
 
 					{/* Mobile Hamburger */}
 					<button
@@ -116,9 +160,7 @@ export const NavBar = (): JSX.Element => {
 						Series
 					</Link>
 					<Link href="/cartoon" onClick={() => setIsOpen(false)}>Cartoons</Link>
-					<Link href="/my-list" onClick={() => setIsOpen(false)}>
-						My List
-					</Link>
+
 					<GenericDropdown<Genre>
 						items={genres}
 						label="Categories"
@@ -135,7 +177,53 @@ export const NavBar = (): JSX.Element => {
 						getLabel={(item) => item.name}
 						onClick={() => setIsOpen(false)}
 					/>
+					{user ? <Link href="/my-list" onClick={() => setIsOpen(false)}>
+						My List
+					</Link> : null}
 					<Link href="/about" onClick={() => setIsOpen(false)}>About</Link>
+					{/* Auth/User */}
+					{/* Auth/User - Mobile */}
+					<div className="flex md:hidden items-center gap-3 text-white">
+						{loading ? (
+							<span className="text-sm text-gray-300">Loading...</span>
+						) : user ? (
+							<div className="flex items-center gap-3">
+								<Link href="/profile" onClick={() => setIsOpen(false)}
+								      className="flex items-center gap-2">
+									<div className="w-8 h-8 rounded-full overflow-hidden bg-gray-700">
+										{user.photoURL ? (
+											<Image src={user.photoURL} alt="avatar" width={32} height={32}/>
+										) : (
+											<div className="w-full h-full flex items-center justify-center text-xs">
+												{user.email?.[0]?.toUpperCase()}
+											</div>
+										)}
+									</div>
+									<span
+										className="text-sm max-w-[160px] truncate">{user.displayName || user.email}</span>
+								</Link>
+								<button
+									onClick={() => {
+										logout();
+										setIsOpen(false);
+									}}
+									className="text-sm text-red-300 hover:text-red-400"
+								>
+									Sign out
+								</button>
+							</div>
+						) : (
+							<button
+								onClick={() => {
+									loginWithGoogle();
+									setIsOpen(false);
+								}}
+								className="text-sm font-medium text-black bg-white px-4 py-1.5 rounded-full border border-gray-200 shadow hover:bg-gray-100 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+							>
+								Sign in
+							</button>
+						)}
+					</div>
 
 					{/* Mobile Search */}
 					<form
@@ -158,6 +246,8 @@ export const NavBar = (): JSX.Element => {
 							<Search size={18}/>
 						</button>
 					</form>
+
+
 				</div>
 			)}
 		</nav>

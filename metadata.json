@@ -1,0 +1,6 @@
+{
+  "name": "NetCap",
+  "description": "Stream your favorite movies and shows with NetCap, a Netflix-inspired streaming platform.",
+  "permissions": [],
+  "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

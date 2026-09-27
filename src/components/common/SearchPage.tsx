@@ -43,7 +43,7 @@ export default function SearchPage() {
   return (
     <main className="bg-black min-h-screen text-white pt-20 px-6 md:px-10 lg:px-16 pb-10">
       <header className="flex items-end justify-between mb-6">
-        <h1 className="text-3xl md:text-4xl font-bold">Results for "{query}"</h1>
+        <h1 className="text-3xl md:text-4xl font-bold">Results for &quot;{query}&quot;</h1>
         <div className="text-sm text-gray-400">
           Page {pagination?.currentPage ?? page} / {pagination?.totalPages ?? 1}
         </div>

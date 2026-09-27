@@ -109,7 +109,7 @@ export default function AboutPage() {
 							<CardContent className="p-0">
 								<div className="relative aspect-[16/10]">
 									<Image
-										src="/images/about/hero-still.jpg"
+										src="/images/astronaut-in-space.jpg"
 										alt="NetCap preview"
 										fill
 										className="object-cover"

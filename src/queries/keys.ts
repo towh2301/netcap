@@ -1,4 +1,5 @@
-export const BASE_URL = process.env.API_URL || "https://phimapi.com";
+export const BASE_URL =
+	process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || "https://phimapi.com";
 
 // Movie types for consistent usage
 export enum MOVIE_TYPES {
